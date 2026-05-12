@@ -1,16 +1,374 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-    <meta name="theme-color" content="#121318" />
-    <link rel="manifest" href="/manifest.json" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
-    <title>Reaper Vault</title>
-  </head>
-  <body class="bg-background text-on-background">
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
-</html>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#121318" />
+  <link rel="manifest" href="/manifest.json" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "secondary-fixed-dim": "#d1bcff",
+            "surface": "#121318",
+            "tertiary-fixed": "#e1e1ed",
+            "error-container": "#93000a",
+            "surface-tint": "#00daf3",
+            "on-secondary-fixed": "#24005b",
+            "on-primary-container": "#00626e",
+            "secondary-container": "#6800ec",
+            "surface-container-lowest": "#0d0e13",
+            "on-tertiary-container": "#575862",
+            "on-tertiary-fixed-variant": "#454650",
+            "surface-variant": "#34343a",
+            "primary-fixed": "#9cf0ff",
+            "tertiary": "#ebebf7",
+            "inverse-on-surface": "#2f3036",
+            "secondary": "#d1bcff",
+            "outline": "#849396",
+            "on-secondary-container": "#d4c0ff",
+            "on-primary-fixed": "#001f24",
+            "error": "#ffb4ab",
+            "surface-container-high": "#292a2f",
+            "surface-container-highest": "#34343a",
+            "inverse-surface": "#e3e1e9",
+            "surface-container-low": "#1a1b21",
+            "on-surface": "#e3e1e9",
+            "on-primary": "#00363d",
+            "outline-variant": "#3b494c",
+            "secondary-fixed": "#eaddff",
+            "on-tertiary-fixed": "#191b23",
+            "inverse-primary": "#006875",
+            "on-surface-variant": "#bac9cc",
+            "primary-container": "#00e5ff",
+            "on-error-container": "#ffdad6",
+            "primary-fixed-dim": "#00daf3",
+            "on-secondary-fixed-variant": "#5700c8",
+            "surface-container": "#1e1f25",
+            "background": "#121318",
+            "on-secondary": "#3d0090",
+            "surface-dim": "#121318",
+            "on-primary-fixed-variant": "#004f58",
+            "on-background": "#e3e1e9",
+            "on-tertiary": "#2e3039",
+            "surface-bright": "#38393f",
+            "on-error": "#690005",
+            "tertiary-fixed-dim": "#c5c6d1",
+            "primary": "#c3f5ff",
+            "tertiary-container": "#cfcfdb"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "unit": "4px",
+            "xl": "32px",
+            "gutter-mobile": "12px",
+            "xs": "4px",
+            "sm": "8px",
+            "lg": "24px",
+            "margin-mobile": "20px",
+            "md": "16px"
+          },
+          fontFamily: {
+            "label-bold": ["Inter"],
+            "body-md": ["Inter"],
+            "display-lg": ["Inter"],
+            "headline-sm": ["Inter"],
+            "label-sm": ["Inter"],
+            "body-lg": ["Inter"],
+            "headline-md": ["Inter"]
+          },
+          fontSize: {
+            "label-bold": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "700" }],
+            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+            "display-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "800" }],
+            "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "700" }],
+            "label-sm": ["11px", { lineHeight: "14px", fontWeight: "500" }],
+            "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+            "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "700" }]
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .glass-panel {
+      background-color: rgba(18, 20, 28, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(0, 218, 243, 0.15);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .progress-gradient {
+      background: linear-gradient(90deg, #d1bcff 0%, #00daf3 100%);
+    }
+    .text-gradient {
+      background: linear-gradient(to right, #c3f5ff, #d1bcff, #9cf0ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+    body {
+      min-height: 100dvh;
+      background-color: #121318;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(ellipse at 20% 50%, rgba(0, 229, 255, 0.08) 0%, transparent 50%),
+                  radial-gradient(ellipse at 80% 20%, rgba(123, 47, 255, 0.06) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+  </style>
+  <title>Reaper Vault</title>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md">
+  <div id="root"></div>
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/framer-motion@10.16.5/dist/framer-motion.min.js"></script>
+  <script type="text/babel">
+    const { useState, useEffect } = React;
+    const { motion, AnimatePresence } = window.framerMotion;
+
+    // ---------- Types (implicit) ----------
+    // ---------- Storage ----------
+    const STORAGE_KEY = 'reaper-vault';
+    const loadLibrary = () => {
+      try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); }
+      catch { return []; }
+    };
+    const saveLibrary = (lib) => localStorage.setItem(STORAGE_KEY, JSON.stringify(lib));
+
+    // ---------- APIs ----------
+    const RAWQ_KEY = '4d04b89bb977405d831f7dd24b492dd7';
+    const PERF_DB = {
+      'elden ring': { preset: 'High', fps: 45, tdp: 25 },
+      'cyberpunk 2077': { preset: 'Medium', fps: 40, tdp: 25 },
+      'crimson desert': { preset: 'Medium', fps: 35, tdp: 25 },
+      'baldur\'s gate 3': { preset: 'Medium', fps: 40, tdp: 25 },
+      'gta v': { preset: 'High', fps: 60, tdp: 20 },
+      'forza horizon 5': { preset: 'High', fps: 60, tdp: 20 },
+    };
+    const searchRAWG = async (q) => {
+      const res = await fetch(`https://api.rawg.io/api/games?key=${RAWQ_KEY}&search=${encodeURIComponent(q)}&page_size=8`);
+      if (!res.ok) throw new Error('Search failed');
+      const data = await res.json();
+      return data.results || [];
+    };
+    const fetchHLTB = async (name) => {
+      try {
+        const res = await fetch('https://howlongtobeat.com/api/search', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ searchType: 'games', searchTerms: [name], searchPage: 1, size: 20 })
+        });
+        if (!res.ok) return null;
+        const data = await res.json();
+        if (!data.data?.length) return null;
+        const b = data.data[0];
+        return {
+          mainStory: (b.comp_main || 0) / 3600,
+          mainPlusExtras: (b.comp_plus || 0) / 3600,
+          completionist: (b.comp_100 || 0) / 3600
+        };
+      } catch { return null; }
+    };
+    const getPerformance = (name, year) => {
+      const lower = name.toLowerCase();
+      for (const [key, val] of Object.entries(PERF_DB)) if (lower.includes(key)) return val;
+      if (year <= 2018) return { preset: 'High', fps: 60, tdp: 15 };
+      if (year >= 2023) return { preset: 'Low', fps: 40, tdp: 25 };
+      return { preset: 'Medium', fps: 50, tdp: 20 };
+    };
+
+    // ---------- Components ----------
+    const App = () => {
+      const [page, setPage] = useState('library');
+      const [library, setLibrary] = useState(loadLibrary());
+      const [selectedGame, setSelectedGame] = useState(null);
+
+      useEffect(() => { saveLibrary(library); }, [library]);
+
+      const addGame = async (game) => {
+        setPage('library');
+        const hltb = await fetchHLTB(game.name);
+        const year = parseInt(game.released?.split('-')[0]) || 2022;
+        const newGame = { ...game, addedAt: new Date().toISOString(), performance: getPerformance(game.name, year), hltb };
+        setLibrary(prev => [newGame, ...prev.filter(g => g.id !== newGame.id)]);
+        setSelectedGame(newGame);
+      };
+      const removeGame = (id) => setLibrary(prev => prev.filter(g => g.id !== id));
+
+      return (
+        <div className="min-h-screen flex flex-col bg-background text-on-background font-body-md">
+          <header className="fixed top-0 w-full z-50 flex items-center justify-between px-margin-mobile h-16 bg-surface/70 backdrop-blur-xl border-b border-white/10">
+            <div className="flex items-center gap-sm">
+              <span className="material-symbols-outlined text-primary text-[24px]">sports_esports</span>
+              <h1 className="font-display-lg text-display-lg text-gradient">{page === 'detail' ? selectedGame?.name : 'Reaper Vault'}</h1>
+            </div>
+            {page === 'detail' ? (
+              <button onClick={() => { setPage('library'); setSelectedGame(null); }} className="text-outline p-2">
+                <span className="material-symbols-outlined">arrow_back</span>
+              </button>
+            ) : (
+              <button onClick={() => setPage('search')} className="text-primary">
+                <span className="material-symbols-outlined">search</span>
+              </button>
+            )}
+          </header>
+
+          <AnimatePresence mode="wait">
+            <motion.div key={page + (selectedGame?.id || '')} initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -15 }} transition={{ duration: 0.2 }} className="flex-1 pt-20 pb-24 px-margin-mobile">
+              {page === 'library' && <LibraryPage library={library} onSelect={(g) => { setSelectedGame(g); setPage('detail'); }} onDelete={removeGame} />}
+              {page === 'search' && <SearchPage onAdd={addGame} />}
+              {page === 'detail' && selectedGame && <DetailPage game={selectedGame} onDelete={() => { removeGame(selectedGame.id); setPage('library'); setSelectedGame(null); }} />}
+            </motion.div>
+          </AnimatePresence>
+
+          <nav className="fixed bottom-0 w-full h-20 flex justify-around items-center px-xl pb-safe bg-surface/70 backdrop-blur-xl border-t border-white/10 shadow-[0_-4px_20px_rgba(0,218,243,0.15)] z-50">
+            <button onClick={() => { setPage('library'); setSelectedGame(null); }} className={`flex flex-col items-center gap-1 transition-all ${page === 'library' ? 'text-primary scale-110' : 'text-outline opacity-50'}`}>
+              <span className="material-symbols-outlined text-[28px]">shelves</span>
+            </button>
+            <button onClick={() => setPage('search')} className={`flex flex-col items-center gap-1 transition-all ${page === 'search' ? 'text-primary scale-110' : 'text-outline opacity-50'}`}>
+              <span className="material-symbols-outlined text-[28px]">search</span>
+            </button>
+          </nav>
+        </div>
+      );
+    };
+
+    const LibraryPage = ({ library, onSelect, onDelete }) => (
+      <div className="flex flex-col gap-md">
+        {library.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-xl my-xl text-center glass-panel rounded-xl p-lg">
+            <span className="material-symbols-outlined text-6xl text-outline opacity-50 mb-md">ghost</span>
+            <h2 className="font-headline-sm text-headline-sm text-on-surface mb-sm">No games yet</h2>
+            <p className="font-body-md text-body-md text-on-surface-variant mb-lg">Your vault is empty. Start adding games to track your stats.</p>
+          </div>
+        ) : (
+          library.map(game => (
+            <article key={game.id} className="glass-panel rounded-xl p-md flex gap-md relative group">
+              <div className="w-28 h-[112px] shrink-0 rounded-lg overflow-hidden border border-white/10">
+                <img src={game.background_image || 'https://via.placeholder.com/112'} className="w-full h-full object-cover" />
+              </div>
+              <div className="flex flex-col justify-between flex-grow">
+                <div className="flex justify-between items-start">
+                  <div>
+                    <button onClick={() => onSelect(game)} className="font-headline-sm text-headline-sm text-on-surface text-left line-clamp-2 mb-xs hover:text-primary">{game.name}</button>
+                    <div className="flex flex-wrap gap-xs mb-sm">
+                      {game.genres?.map(g => <span key={g.name} className="px-sm py-xs rounded bg-surface-container-high border border-outline-variant font-label-sm text-label-sm text-on-surface-variant">{g.name}</span>)}
+                    </div>
+                  </div>
+                  <button onClick={() => onDelete(game.id)} className="text-outline opacity-0 group-hover:opacity-100 transition-opacity p-xs"><span className="material-symbols-outlined">delete</span></button>
+                </div>
+                <div className="flex items-center gap-sm mt-auto">
+                  {game.performance && <span className="px-sm py-xs rounded-full bg-primary/10 border border-primary/30 font-label-bold text-label-bold text-primary flex items-center gap-xs"><span className="material-symbols-outlined text-[14px]">speed</span>{game.performance.fps} FPS @ {game.performance.preset}</span>}
+                  {game.hltb && <span className="px-sm py-xs rounded-full bg-surface-container-highest font-label-bold text-label-bold text-on-surface-variant flex items-center gap-xs"><span className="material-symbols-outlined text-[14px]">schedule</span>{Math.round(game.hltb.mainStory)}h</span>}
+                </div>
+              </div>
+            </article>
+          ))
+        )}
+      </div>
+    );
+
+    const SearchPage = ({ onAdd }) => {
+      const [query, setQuery] = useState('');
+      const [results, setResults] = useState([]);
+      const [loading, setLoading] = useState(false);
+
+      const handleSearch = async () => {
+        if (query.trim().length < 3) return;
+        setLoading(true);
+        try { setResults(await searchRAWG(query)); } catch { }
+        setLoading(false);
+      };
+
+      return (
+        <div className="flex flex-col gap-lg">
+          <div className="relative group">
+            <span className="material-symbols-outlined absolute left-md top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+            <input value={query} onChange={e => setQuery(e.target.value)} onKeyDown={e => e.key === 'Enter' && handleSearch()} className="w-full bg-surface-container-highest/60 border border-white/10 rounded-full py-md pl-[48px] pr-[48px] font-body-lg text-body-lg text-on-surface placeholder:text-on-surface-variant/50 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary focus:bg-surface-container-high transition-all backdrop-blur-md" placeholder="Search games..." />
+            {query && <button onClick={() => setQuery('')} className="absolute right-md top-1/2 -translate-y-1/2 text-on-surface-variant"><span className="material-symbols-outlined">close</span></button>}
+          </div>
+          {loading && <p className="text-center text-outline">Searching...</p>}
+          <div className="flex flex-col gap-md">
+            {results.map(game => (
+              <div key={game.id} className="flex items-center gap-md p-sm bg-surface/40 backdrop-blur-xl border border-white/10 rounded-xl group">
+                <div className="w-[60px] h-[80px] rounded-lg overflow-hidden shrink-0 border border-white/5">
+                  <img src={game.background_image || ''} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex-1 overflow-hidden">
+                  <h3 className="font-headline-sm text-headline-sm text-on-surface truncate group-hover:text-primary">{game.name}</h3>
+                  <p className="font-body-md text-body-md text-on-surface-variant">{game.released || 'TBA'}</p>
+                </div>
+                <button onClick={() => onAdd(game)} className="w-9 h-9 rounded-full border border-primary/50 text-primary flex items-center justify-center shrink-0"><span className="material-symbols-outlined">add</span></button>
+              </div>
+            ))}
+          </div>
+        </div>
+      );
+    };
+
+    const DetailPage = ({ game, onDelete }) => (
+      <div>
+        <div className="relative w-full h-[442px] min-h-[400px] mb-lg">
+          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url('${game.background_image}')` }}></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+          <div className="absolute bottom-0 left-0 w-full px-margin-mobile pb-lg">
+            <h1 className="font-display-lg text-display-lg text-primary drop-shadow-[0_0_12px_rgba(195,245,255,0.4)]">{game.name}</h1>
+            <div className="flex items-center gap-sm mt-xs">
+              {game.genres?.map(g => <span key={g.name} className="px-sm py-xs bg-secondary-container/30 border border-secondary/20 rounded-md font-label-sm text-label-sm text-secondary-fixed">{g.name}</span>)}
+            </div>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-2 gap-md mb-lg">
+          <div className="glass-panel rounded-xl p-md border-primary/10">
+            <div className="flex items-center gap-sm mb-md">
+              <span className="material-symbols-outlined text-primary text-[20px]">speed</span>
+              <h3 className="font-label-bold text-label-bold text-on-surface-variant">PERFORMANCE</h3>
+            </div>
+            <div className="flex items-baseline justify-between border-b border-white/5 pb-xs">
+              <span className="text-[28px] leading-tight text-primary-fixed-dim drop-shadow-[0_0_8px_rgba(0,218,243,0.3)]">{game.performance?.fps || '?'}</span>
+              <span className="font-label-sm text-label-sm text-outline">FPS</span>
+            </div>
+            <div className="flex justify-between items-center mt-xs">
+              <span className="font-body-md text-body-md text-on-surface">Preset</span>
+              <span className="font-label-bold text-label-bold text-primary">{game.performance?.preset || 'N/A'}</span>
+            </div>
+          </div>
+          <div className="glass-panel rounded-xl p-md">
+            <div className="flex items-center gap-sm mb-md">
+              <span className="material-symbols-outlined text-secondary text-[20px]">schedule</span>
+              <h3 className="font-label-bold text-label-bold text-on-surface-variant">MAIN STORY</h3>
+            </div>
+            <div className="flex items-baseline gap-xs">
+              <span className="text-[36px] leading-none text-secondary">{game.hltb ? Math.round(game.hltb.mainStory) : '?'}</span>
+              <span className="font-label-bold text-label-bold text-outline">HRS</span>
+            </div>
+          </div>
+        </div>
+
+        {game.hltb && (
+          <section className="glass-panel rounded-xl overflow-hidden mb-lg">
+            <div className="grid grid-cols-3 divide-x divide-white/10">
+              <div className="p-md flex flex-col items
