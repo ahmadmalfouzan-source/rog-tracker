@@ -1,0 +1,6 @@
+{
+  "buildCommand": "echo 'static'",
+  "outputDirectory": ".",
+  "installCommand": "echo 'skip'",
+  "devCommand": "echo 'done'"
+}
