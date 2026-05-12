@@ -2,15 +2,40 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ========= إعدادات ألوان Stitch ========= */
+@layer base {
+  :root {
+    --background: 220 18% 8%;
+    --surface: 222 19% 7%;
+    --primary: 188 100% 80%;
+    --primary-fixed-dim: 188 100% 48%;
+    --secondary: 258 100% 84%;
+    --on-surface: 240 14% 95%;
+    --outline: 195 6% 55%;
+    --surface-container-high: 225 15% 16%;
+    --error-container: 0 100% 29%;
+    --on-primary-container: 188 100% 80%;
+    --secondary-container: 264 100% 46%;
+  }
+}
+
+/* ========= كلاسات الزجاج والتدرجات (من Stitch) ========= */
 @layer components {
   .glass-panel {
-    @apply bg-[rgba(18,20,28,0.7)] backdrop-blur-xl border border-[rgba(0,218,243,0.1)] border-t-white/10;
+    background-color: rgba(18, 20, 28, 0.7);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 218, 243, 0.15);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
   .progress-gradient {
-    @apply bg-gradient-to-r from-[#d1bcff] to-[#00daf3];
+    background: linear-gradient(90deg, #d1bcff 0%, #00daf3 100%);
   }
   .text-gradient {
-    @apply bg-gradient-to-r from-[#c3f5ff] via-[#d1bcff] to-[#9cf0ff] bg-clip-text text-transparent;
+    background: linear-gradient(to right, #c3f5ff, #d1bcff, #9cf0ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
   }
   .hide-scrollbar::-webkit-scrollbar {
     display: none;
@@ -21,10 +46,11 @@
   }
 }
 
-/* خلفية الجسيمات المتحركة */
+/* ========= خلفية الجسيمات المتحركة ========= */
 body {
   min-height: 100dvh;
   background-color: #121318;
+  font-family: 'Inter', system-ui, sans-serif;
 }
 body::before {
   content: '';
@@ -37,6 +63,7 @@ body::before {
   z-index: 0;
 }
 
+/* خطوط Material Symbols */
 .material-symbols-outlined {
   font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
 }
